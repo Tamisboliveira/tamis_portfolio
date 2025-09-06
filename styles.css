@@ -260,12 +260,16 @@ main {
 
 .skills-list li {
     background: rgba(45, 45, 65, 0.5);
-    padding: 1.5rem;
+    display: block;                 /* volta ao fluxo normal */
+    padding: 1.5rem 2.75rem 1.5rem 1.5rem; /* espaço à direita p/ o ⚡ */
     border-radius: 12px;
     border: 1px solid rgba(168, 85, 247, 0.2);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
+    line-height: 1.6;
+    word-break: normal;
+    overflow-wrap: break-word;
 }
 
 .skills-list li::before {
@@ -281,10 +285,12 @@ main {
 .skills-list li::after {
     content: "⚡";
     position: absolute;
-    top: 1rem;
-    right: 1rem;
-    font-size: 1.2rem;
-    opacity: 0.6;
+    top: 12px;
+    right: 12px;
+    font-size: 1.1rem;
+    opacity: 0.7;
+    pointer-events: none;           /* não captura clique */
+    transition: transform .3s ease, opacity .3s ease;
 }
 
 .skills-list li:hover {
@@ -474,6 +480,71 @@ footer {
     transform: translateY(-2px);
 }
 
+/* Pop-up Customizado */
+.popup-container {
+    display: none; 
+    position: fixed;
+    z-index: 9999; /* Garante que fique acima de tudo */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+.popup-content {
+    background: rgba(30, 30, 46, 0.8);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    padding: 2.5rem;
+    border-radius: 16px;
+    text-align: center;
+    position: relative;
+    max-width: 450px;
+    width: 90%;
+    color: #e4e4e7;
+    animation: fadeIn 0.5s ease-out;
+    white-space: pre-line; /* Mantém quebras de linha */
+    line-height: 1.6;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.popup-content p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.close-btn {
+    color: #a855f7;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 32px;
+    font-weight: 300;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+    color: #ec4899;
+}
+
 /* Responsividade */
 @media (max-width: 768px) {
     h1 {
@@ -502,6 +573,10 @@ footer {
     .skills-list {
         grid-template-columns: 1fr;
     }
+
+    .skills-list li { 
+        padding-right: 3rem; 
+    } 
 
     .projects-table {
         font-size: 0.9rem;
